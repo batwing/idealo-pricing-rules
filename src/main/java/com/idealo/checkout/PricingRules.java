@@ -1,7 +1,8 @@
 package com.idealo.checkout;
 
+import java.util.List;
 import java.util.Map;
 
 public class PricingRules {
-  Map<String, PricingRule> pricingRules;
+  private List<PricePromotionStrategy> promotionStrategies;
 }

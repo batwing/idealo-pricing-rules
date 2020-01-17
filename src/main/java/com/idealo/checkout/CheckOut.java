@@ -4,7 +4,7 @@ import java.util.Map;
 
 public class CheckOut {
   private PricingRules pricingRules;
-  private Map<String, Integer> shoppingCart;
+  private ShoppingCart shoppingCart;
   private int total = 0;
 
   public CheckOut(PricingRules pricingRules) {
@@ -13,5 +13,9 @@ public class CheckOut {
 
   public void scan(String skuId){
 
+  }
+
+  public int getTotal() {
+    return total;
   }
 }
