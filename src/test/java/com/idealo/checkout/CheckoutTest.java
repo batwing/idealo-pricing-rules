@@ -2,16 +2,45 @@ package com.idealo.checkout;
 
 import static org.junit.Assert.assertEquals;
 
+import com.idealo.checkout.model.Sku;
+import com.idealo.checkout.promo.BuyFewGetNextWithDiscount;
+import com.idealo.checkout.promo.PricePromotionStrategy;
+import com.idealo.checkout.storage.SkuStorage;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
-public class CheckoutTest {
+import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.List;
 
-  public int calculatePrice(String goods) {
-    CheckOut checkout = new CheckOut(rule);
+public class CheckoutTest {
+  private static PricingRules rules;
+  private static SkuStorage storage;
+
+  @BeforeClass
+  public void init(){
+
+    storage = new SkuStorage();
+    storage.add(new Sku("A", new BigDecimal(40)));
+    storage.add(new Sku("B", new BigDecimal(50)));
+    storage.add(new Sku("C", new BigDecimal(25)));
+    storage.add(new Sku("D", new BigDecimal(20)));
+
+    List<PricePromotionStrategy> promotionStrategies = new ArrayList<>();
+    promotionStrategies.add(new BuyFewGetNextWithDiscount(new HashSet<>(Arrays.asList("A")),3,1,0.5));
+    promotionStrategies.add(new BuyFewGetNextWithDiscount(new HashSet<>(Arrays.asList("B")),2,1,0.4));
+
+    rules = new PricingRules(storage, promotionStrategies);
+  }
+
+  public BigDecimal calculatePrice(String goods) {
+    CheckOut checkout = new CheckOut(rules);
     for (int i = 0; i < goods.length(); i++) {
       checkout.scan(String.valueOf(goods.charAt(i)));
     }
-    return checkout.total;
+    return checkout.getTotal();
   }
 
   @Test
@@ -33,17 +62,17 @@ public class CheckoutTest {
 
   @Test
   public void incremental() {
-    CheckOut checkout = new CheckOut(rule);
-    assertEquals(0, checkout.total);
+    CheckOut checkout = new CheckOut(rules);
+    assertEquals(0, checkout.getTotal());
     checkout.scan("A");
-    assertEquals(40, checkout.total);
+    assertEquals(40, checkout.getTotal());
     checkout.scan("B");
-    assertEquals(90, checkout.total);
+    assertEquals(90, checkout.getTotal());
     checkout.scan("A");
-    assertEquals(130, checkout.total);
+    assertEquals(130, checkout.getTotal());
     checkout.scan("A");
-    assertEquals(150, checkout.total);
+    assertEquals(150, checkout.getTotal());
     checkout.scan("B");
-    assertEquals(180, checkout.total);
+    assertEquals(180, checkout.getTotal());
   }
 }

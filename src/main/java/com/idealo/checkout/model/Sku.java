@@ -1,4 +1,4 @@
-package com.idealo.checkout;
+package com.idealo.checkout.model;
 
 import java.math.BigDecimal;
 import lombok.AccessLevel;
@@ -10,5 +10,6 @@ import lombok.experimental.FieldDefaults;
 public class Sku {
   String id;
   BigDecimal price;
-  String name;
+  //String name;
+  //String description;
 }
