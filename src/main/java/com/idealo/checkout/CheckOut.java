@@ -16,8 +16,9 @@ public class CheckOut {
   public void scan(String skuId){
     shoppingCart.addSku(skuId);
     total = pricingRules.getPromotionStrategies().stream()
-            .filter(promo -> promo)
             .map(promo -> promo.apply(shoppingCart))
+            .filter(totalPerItem -> totalPerItem.isPresent())
+            .map(totalPerItem -> totalPerItem.get())
             .min(Comparator.naturalOrder())
             .orElse(BigDecimal.ZERO);
   }
