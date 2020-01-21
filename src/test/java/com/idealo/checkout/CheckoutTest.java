@@ -20,7 +20,7 @@ public class CheckoutTest {
   private static SkuStorage storage;
 
   @BeforeClass
-  public void init(){
+  public static void init(){
 
     storage = new SkuStorage();
     storage.add(new Sku("A", new BigDecimal(40)));
@@ -45,19 +45,19 @@ public class CheckoutTest {
 
   @Test
   public void totals() {
-    assertEquals(0, calculatePrice(""));
-    assertEquals(40, calculatePrice("A"));
-    assertEquals(90, calculatePrice("AB"));
-    assertEquals(135, calculatePrice("CDBA"));
-    assertEquals(80, calculatePrice("AA"));
-    assertEquals(100, calculatePrice("AAA"));
-    assertEquals(140, calculatePrice("AAAA"));
-    assertEquals(180, calculatePrice("AAAAA"));
-    assertEquals(200, calculatePrice("AAAAAA"));
-    assertEquals(150, calculatePrice("AAAB"));
-    assertEquals(180, calculatePrice("AAABB"));
-    assertEquals(200, calculatePrice("AAABBD"));
-    assertEquals(200, calculatePrice("DABABA"));
+    assertEquals(BigDecimal.valueOf(0), calculatePrice(""));
+    assertEquals(BigDecimal.valueOf(40), calculatePrice("A"));
+    assertEquals(BigDecimal.valueOf(90), calculatePrice("AB"));
+    assertEquals(BigDecimal.valueOf(135), calculatePrice("CDBA"));
+    assertEquals(BigDecimal.valueOf(80), calculatePrice("AA"));
+    assertEquals(BigDecimal.valueOf(100), calculatePrice("AAA"));
+    assertEquals(BigDecimal.valueOf(140), calculatePrice("AAAA"));
+    assertEquals(BigDecimal.valueOf(180), calculatePrice("AAAAA"));
+    assertEquals(BigDecimal.valueOf(200), calculatePrice("AAAAAA"));
+    assertEquals(BigDecimal.valueOf(150), calculatePrice("AAAB"));
+    assertEquals(BigDecimal.valueOf(180), calculatePrice("AAABB"));
+    assertEquals(BigDecimal.valueOf(200), calculatePrice("AAABBD"));
+    assertEquals(BigDecimal.valueOf(200), calculatePrice("DABABA"));
   }
 
   @Test

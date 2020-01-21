@@ -8,9 +8,9 @@ import java.util.HashSet;
 
 @AllArgsConstructor
 public class BuyFewGetNextWithDiscount implements LineItemPricePromotion {
-    private HashSet<String> setOfSkuId;
+    private HashSet<String> setOfSkuId;//TODO: rename to setOfPromoSkuId
     private int minCountOfSkuToGetDiscount;
-    private int minCountOfSkuUnderDiscount;
+    private int minCountOfSkuWithDiscount;
     private double discountValue;
 
     @Override
@@ -20,10 +20,10 @@ public class BuyFewGetNextWithDiscount implements LineItemPricePromotion {
 
     @Override
     public BigDecimal getTotalPricePerItemWithDiscount(LineItem lineItem){
-        int totalSkuUnderDiscountPerItem = (lineItem.getCount() / minCountOfSkuToGetDiscount) * minCountOfSkuUnderDiscount;//divQuotient
-        int totalSkuWithoutDiscountPerItem = lineItem.getCount() - totalSkuUnderDiscountPerItem;//divRemainder
+        int totalSkuWithDiscountPerItem = (lineItem.getCount() / minCountOfSkuToGetDiscount) * minCountOfSkuWithDiscount;//divQuotient
+        int totalSkuNoDiscountPerItem = lineItem.getCount() - totalSkuWithDiscountPerItem;//divRemainder
         return lineItem.getSku().price
-                .multiply(BigDecimal.valueOf(totalSkuWithoutDiscountPerItem))
-                .add(lineItem.getSku().price.multiply(BigDecimal.valueOf(totalSkuUnderDiscountPerItem * (1-discountValue))));
+                .multiply(BigDecimal.valueOf(totalSkuNoDiscountPerItem))
+                .add(lineItem.getSku().price.multiply(BigDecimal.valueOf(totalSkuWithDiscountPerItem * (1-discountValue))));
     }
 }
