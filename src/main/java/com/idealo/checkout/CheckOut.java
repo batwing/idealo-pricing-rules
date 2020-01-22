@@ -1,7 +1,6 @@
 package com.idealo.checkout;
 
 import java.math.BigDecimal;
-import java.util.Comparator;
 
 public class CheckOut {
   private PricingRules pricingRules;
@@ -15,10 +14,10 @@ public class CheckOut {
 
   public void scan(String skuId){
     shoppingCart.addSku(skuId);
-    total = pricingRules.getPromotionStrategies().stream()
-            .filter(promo -> promo)
-            .map(promo -> promo.apply(shoppingCart))
-            .min(Comparator.naturalOrder())
+    pricingRules.getPromotionStrategies().forEach(promo -> promo.apply(shoppingCart));
+    total = shoppingCart.getLineItems().stream()
+            .map(lineItem -> lineItem.getTotal())
+            .reduce(BigDecimal::add)
             .orElse(BigDecimal.ZERO);
   }
 

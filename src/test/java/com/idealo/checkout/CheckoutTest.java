@@ -45,34 +45,34 @@ public class CheckoutTest {
 
   @Test
   public void totals() {
-    assertEquals(BigDecimal.valueOf(0), calculatePrice(""));
-    assertEquals(BigDecimal.valueOf(40), calculatePrice("A"));
-    assertEquals(BigDecimal.valueOf(90), calculatePrice("AB"));
-    assertEquals(BigDecimal.valueOf(135), calculatePrice("CDBA"));
-    assertEquals(BigDecimal.valueOf(80), calculatePrice("AA"));
-    assertEquals(BigDecimal.valueOf(100), calculatePrice("AAA"));
-    assertEquals(BigDecimal.valueOf(140), calculatePrice("AAAA"));
-    assertEquals(BigDecimal.valueOf(180), calculatePrice("AAAAA"));
-    assertEquals(BigDecimal.valueOf(200), calculatePrice("AAAAAA"));
-    assertEquals(BigDecimal.valueOf(150), calculatePrice("AAAB"));
-    assertEquals(BigDecimal.valueOf(180), calculatePrice("AAABB"));
-    assertEquals(BigDecimal.valueOf(200), calculatePrice("AAABBD"));
-    assertEquals(BigDecimal.valueOf(200), calculatePrice("DABABA"));
+    assertEquals(0, calculatePrice("").intValue());
+    assertEquals(40, calculatePrice("A").intValue());
+    assertEquals(90, calculatePrice("AB").intValue());
+    assertEquals(135, calculatePrice("CDBA").intValue());
+    assertEquals(80, calculatePrice("AA").intValue());
+    assertEquals(100, calculatePrice("AAA").intValue());
+    assertEquals(140, calculatePrice("AAAA").intValue());
+    assertEquals(180, calculatePrice("AAAAA").intValue());
+    assertEquals(200, calculatePrice("AAAAAA").intValue());
+    assertEquals(150, calculatePrice("AAAB").intValue());
+    assertEquals(180, calculatePrice("AAABB").intValue());
+    assertEquals(200, calculatePrice("AAABBD").intValue());
+    assertEquals(200, calculatePrice("DABABA").intValue());
   }
 
   @Test
   public void incremental() {
     CheckOut checkout = new CheckOut(rules);
-    assertEquals(0, checkout.getTotal());
+    assertEquals(0, checkout.getTotal().intValue());
     checkout.scan("A");
-    assertEquals(40, checkout.getTotal());
+    assertEquals(40, checkout.getTotal().intValue());
     checkout.scan("B");
-    assertEquals(90, checkout.getTotal());
+    assertEquals(90, checkout.getTotal().intValue());
     checkout.scan("A");
-    assertEquals(130, checkout.getTotal());
+    assertEquals(130, checkout.getTotal().intValue());
     checkout.scan("A");
-    assertEquals(150, checkout.getTotal());
+    assertEquals(150, checkout.getTotal().intValue());
     checkout.scan("B");
-    assertEquals(180, checkout.getTotal());
+    assertEquals(180, checkout.getTotal().intValue());
   }
 }
