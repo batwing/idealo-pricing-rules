@@ -19,6 +19,6 @@ public class LineItem {
     public LineItem(Sku sku, int count) {
         this.sku = sku;
         this.count = count;
-        total = sku.price.multiply(BigDecimal.valueOf(count));
+        total = sku.getPrice().multiply(BigDecimal.valueOf(count));
     }
 }

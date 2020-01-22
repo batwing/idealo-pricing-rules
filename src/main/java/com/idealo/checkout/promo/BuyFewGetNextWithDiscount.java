@@ -15,12 +15,12 @@ public class BuyFewGetNextWithDiscount implements LineItemPricePromotion {
 
     @Override
     public boolean filter(LineItem lineItem) {
-        return setOfPromoSkuId.contains(lineItem.getSku().id);
+        return setOfPromoSkuId.contains(lineItem.getSku().getId());
     }
 
     @Override
     public void applyDiscount(LineItem lineItem){
-        BigDecimal skuPrice = lineItem.getSku().price;
+        BigDecimal skuPrice = lineItem.getSku().getPrice();
         int totalSkuWithDiscountPerItem = (lineItem.getCount() / minCountOfSkuToGetDiscount) * minCountOfSkuWithDiscount;
         int totalSkuNoDiscountPerItem = lineItem.getCount() - totalSkuWithDiscountPerItem;
         lineItem.setTotal(
