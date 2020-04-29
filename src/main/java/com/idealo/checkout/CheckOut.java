@@ -15,11 +15,10 @@ public class CheckOut {
 
   public void scan(String skuId){
     shoppingCart.addSku(skuId);
-    total = pricingRules.getPromotionStrategies().stream()
-            .map(promo -> promo.apply(shoppingCart))
-            .filter(totalPerItem -> totalPerItem.isPresent())
-            .map(totalPerItem -> totalPerItem.get())
-            .min(Comparator.naturalOrder())
+    pricingRules.getPromotionStrategies().forEach(promo -> promo.apply(shoppingCart));
+    total = shoppingCart.getLineItems().stream()
+            .map(lineItem -> lineItem.getTotal())
+            .reduce(BigDecimal::add)
             .orElse(BigDecimal.ZERO);
   }
 

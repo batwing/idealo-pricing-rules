@@ -4,6 +4,7 @@ import static org.junit.Assert.assertEquals;
 
 import com.idealo.checkout.model.Sku;
 import com.idealo.checkout.promo.BuyFewGetNextWithDiscount;
+import com.idealo.checkout.promo.BuyOneGetFixedDiscount;
 import com.idealo.checkout.promo.PricePromotionStrategy;
 import com.idealo.checkout.storage.SkuStorage;
 import org.junit.BeforeClass;
@@ -27,10 +28,13 @@ public class CheckoutTest {
     storage.add(new Sku("B", new BigDecimal(50)));
     storage.add(new Sku("C", new BigDecimal(25)));
     storage.add(new Sku("D", new BigDecimal(20)));
+    storage.add(new Sku("E", new BigDecimal(50)));
+
 
     List<PricePromotionStrategy> promotionStrategies = new ArrayList<>();
     promotionStrategies.add(new BuyFewGetNextWithDiscount(new HashSet<>(Arrays.asList("A")),3,1,0.5));
     promotionStrategies.add(new BuyFewGetNextWithDiscount(new HashSet<>(Arrays.asList("B")),2,1,0.4));
+    promotionStrategies.add(new BuyOneGetFixedDiscount(new HashSet<>(Arrays.asList("E")),10));
 
     rules = new PricingRules(storage, promotionStrategies);
   }
@@ -41,6 +45,12 @@ public class CheckoutTest {
       checkout.scan(String.valueOf(goods.charAt(i)));
     }
     return checkout.getTotal();
+  }
+
+  @Test
+  public void shouldApplyFixedDiscountPerEachItem() {
+    assertEquals(40, calculatePrice("EA").intValue());
+    assertEquals(80, calculatePrice("EE").intValue());
   }
 
   @Test
