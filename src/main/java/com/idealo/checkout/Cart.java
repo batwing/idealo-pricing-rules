@@ -27,11 +27,8 @@ public class Cart {
         Sku sku = storage.findById(skuId);
 
         Optional<LineItem> lineItem = lineItems.stream()
-                .filter(item -> skuId.equals(item.getSku().id))
+                .filter(item -> skuId.equals(item.getSku().getId()))
                 .findFirst();
-                //.ifPresent(item -> item.setCount(item.getCount() + 1))
-                //.orElse(new LineItem(sku, 1));
-
 
         if (lineItem.isPresent()) {
             lineItem.get().setCount(lineItem.get().getCount() + 1);

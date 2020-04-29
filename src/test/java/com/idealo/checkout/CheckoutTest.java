@@ -63,16 +63,16 @@ public class CheckoutTest {
   @Test
   public void incremental() {
     CheckOut checkout = new CheckOut(rules);
-    assertEquals(0, checkout.getTotal());
+    assertEquals(0, checkout.getTotal().intValue());
     checkout.scan("A");
-    assertEquals(40, checkout.getTotal());
+    assertEquals(40, checkout.getTotal().intValue());
     checkout.scan("B");
-    assertEquals(90, checkout.getTotal());
+    assertEquals(90, checkout.getTotal().intValue());
     checkout.scan("A");
-    assertEquals(130, checkout.getTotal());
+    assertEquals(130, checkout.getTotal().intValue());
     checkout.scan("A");
-    assertEquals(150, checkout.getTotal());
+    assertEquals(150, checkout.getTotal().intValue());
     checkout.scan("B");
-    assertEquals(180, checkout.getTotal());
+    assertEquals(180, checkout.getTotal().intValue());
   }
 }

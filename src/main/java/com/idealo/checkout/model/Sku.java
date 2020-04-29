@@ -1,15 +1,14 @@
 package com.idealo.checkout.model;
 
 import java.math.BigDecimal;
-import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
-import lombok.experimental.FieldDefaults;
+import lombok.Getter;
+import lombok.Setter;
 
-@FieldDefaults(makeFinal = true, level = AccessLevel.PUBLIC)
+@Setter
+@Getter
 @AllArgsConstructor
 public class Sku {
-  String id;
-  BigDecimal price;
-  //String name;
-  //String description;
+  private String id;
+  private BigDecimal price;
 }

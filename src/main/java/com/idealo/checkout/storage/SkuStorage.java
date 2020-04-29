@@ -10,7 +10,7 @@ public class SkuStorage {
     private Map<String, Sku> storage = new ConcurrentHashMap<>();
 
     public void add(Sku sku){
-        storage.putIfAbsent(sku.id, sku);
+        storage.putIfAbsent(sku.getId(), sku);
     }
 
     public Sku findById(String skuId) throws NoSuchElementException {
